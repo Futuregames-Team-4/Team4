@@ -4,14 +4,14 @@ public class PlayerMovement : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Clic sinistro del mouse
+        if (Input.GetMouseButtonDown(0)) // Left mouse click
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
 
-                if (hit.collider.CompareTag("Square")) // Assicurati di assegnare il tag "Cube" ai tuoi cubi
+                if (hit.collider.CompareTag("Square")) // Remember the tag
                 {
                     SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
                     if (squareStatus != null && !squareStatus.isOccupied)
