@@ -6,13 +6,13 @@ public class FuelConsumption : MonoBehaviour
 {
     public int fuel;
 
-   
+
     public void MovementCost()
     {
         fuel--;
     }
 
-    public void UseConsumable ()
+    public void UseConsumable()
     {
         fuel = 10;
     }
@@ -20,5 +20,10 @@ public class FuelConsumption : MonoBehaviour
     public void HitByEnemy()
     {
         fuel = fuel - 5;
+    }
+
+    public void KilledByEnemy()
+    {
+        fuel = fuel - 10;
     }
 }
