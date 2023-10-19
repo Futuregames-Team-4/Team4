@@ -318,6 +318,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -1332379637146263767, guid: 12a7d0da014e8444c944f61464c68140, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fcd23cb7404dd4b1385a5f347bab9d12, type: 2}
+    - target: {fileID: 827551120229891681, guid: 12a7d0da014e8444c944f61464c68140, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fcd23cb7404dd4b1385a5f347bab9d12, type: 2}
     - target: {fileID: 919132149155446097, guid: 12a7d0da014e8444c944f61464c68140, type: 3}
       propertyPath: m_Name
       value: Enemy_and_protag
