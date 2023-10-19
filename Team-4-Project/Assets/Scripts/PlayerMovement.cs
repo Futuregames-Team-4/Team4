@@ -9,26 +9,34 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // Bit shift the index of the layer (8) to get a bit mask
-            int layerMask = 1 << 8;
-            // This would cast rays only against colliders in layer 8.
-            // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-            layerMask = ~layerMask;
+            int layerMask = 1 << 8; // Cast rays only against colliders in layer 8.
+            layerMask = ~layerMask; // Collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
 
             if (Physics.Raycast(ray, out hit))
             {
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) // Remember the tag
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
-                    if (squareStatus != null && !squareStatus.isOccupied)
+                    if (IsValidMove(hit.collider.transform.position))
                     {
-                        MoveTo(hit.collider.transform.position);
+                        SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
+                        if (squareStatus != null && !squareStatus.isOccupied)
+                        {
+                            MoveTo(hit.collider.transform.position);
+                        }
                     }
                 }
             }
         }
     }
+
+    private bool IsValidMove(Vector3 targetPosition)
+    {
+        float xDifference = Mathf.Abs(targetPosition.x - transform.position.x);
+        float zDifference = Mathf.Abs(targetPosition.z - transform.position.z);
+
+        return (xDifference == 1.25f && zDifference == 0f) || (zDifference == 1.25f && xDifference == 0f);
+    }
+
 
     private void MoveTo(Vector3 targetPosition)
     {
@@ -38,4 +46,5 @@ public class PlayerMovement : MonoBehaviour
             occupier.MoveTo(targetPosition);
         }
     }
+
 }
