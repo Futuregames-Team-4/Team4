@@ -9,7 +9,7 @@ public class PickupItem : MonoBehaviour
 
     private void Start()
     {
-        inventory = GameObject.FindGameObjectsWithTag("Player").GetComponent<Inventory>();
+        //inventory = GameObject.FindGameObjectsWithTag("Player").GetComponent<Inventory>();
     }
 
     void OnTriggerEnter(Collider other)
