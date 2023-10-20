@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
+    public static GameStateManager Instance { get; private set; } // Singleton instance
+    
     public enum GameState { 
         GameStateStart,     // Show Main Menu
         GameStatePlaying,   // Player's turn
@@ -9,17 +11,21 @@ public class GameStateManager : MonoBehaviour
         GameStatePaused,    // Show the Pause Menu
         GameStateEnd }      // Game Over / Victory!
 
-    public GameState CurrentState { get; private set; } = GameState.GameStateStart;
+    public static GameState CurrentState { get; private set; } = GameState.GameStateStart;
 
     private PlayerMovement playerMovement;
 
     private void Awake()
     {
-        // Only 1 instance of GameStateManager exists between scenes, and is not destroyable
-        if (FindObjectsOfType<GameStateManager>().Length > 1) 
+        // Singleton logic
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
-        else
-            DontDestroyOnLoad(gameObject);
+            return; // This is important to stop further execution for the duplicate instance.
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         playerMovement = FindObjectOfType<PlayerMovement>();
         OnGameStateChanged += HandleGameStateChange;
