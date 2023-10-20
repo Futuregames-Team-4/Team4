@@ -43,7 +43,6 @@ public class Occupier : MonoBehaviour
                 if (cubeStatus)
                 {
                     cubeStatus.isOccupied = true;
-                    Debug.Log("La casella è occupata");
                 }
             }
         }
