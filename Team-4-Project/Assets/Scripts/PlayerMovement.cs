@@ -4,9 +4,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public int maxActionPoints = 3;
     private int currentActionPoints;
-    public bool mouseDebug = false;     // Show Raycast of the mouse
-    public bool useActionPoints = true; // Enable or disale ActionPoints
-    
+    public bool mouseDebug = false;             // Show Raycast of the mouse
+    public bool useActionPoints = true;         // Enable or disale ActionPoints
+    private GameStateManager gameStateManager;  // Game Manager
     private RaycastHit hitInfo;
 
     private void Start()
