@@ -2,31 +2,56 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public int maxActionPoints = 3; // Numero massimo di ActionPoints che un giocatore può avere.
+    private int currentActionPoints; // ActionPoints attuali del giocatore.
+    public bool mouseDebug = false; // Variabile per attivare/disattivare il debug del mouse
+    public bool useActionPoints = true; // Se true, i movimenti sono vincolati dagli action points.
+
+
+
+    private void Start()
+    {
+        currentActionPoints = maxActionPoints; // Inizializza gli ActionPoints al loro valore massimo all'inizio.
+    }
+
     private void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        int layerMask = 1 << 8; 
+        layerMask = ~layerMask;
+
+        RaycastHit hit;
+        
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            if (mouseDebug) // Se mouseDebug è attivo
+            {
+                // Disegna una linea dalla posizione di origine del ray fino al punto di intersezione con l'oggetto.
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+            }
+        }
+
+        if (useActionPoints && currentActionPoints <= 0) return; // Se useActionPoints è true e non ci sono action points, non fare niente.
+
+
         if (Input.GetMouseButtonDown(0)) // Left mouse click
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            int layerMask = 1 << 8; // Cast rays only against colliders in layer 8.
-            layerMask = ~layerMask; // Collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-
-            if (Physics.Raycast(ray, out hit))
+            if (hit.collider != null && IsValidMove(hit.collider.transform.position))
             {
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
+                if (squareStatus != null && !squareStatus.isOccupied)
                 {
-                    if (IsValidMove(hit.collider.transform.position))
+                    MoveTo(hit.collider.transform.position);
+                    if (useActionPoints) 
                     {
-                        SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
-                        if (squareStatus != null && !squareStatus.isOccupied)
-                        {
-                            MoveTo(hit.collider.transform.position);
-                        }
+                        currentActionPoints--; // Consuma un ActionPoint solo se useActionPoints è true.
                     }
                 }
             }
         }
+
+
     }
 
     private bool IsValidMove(Vector3 targetPosition)
@@ -37,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
         return (xDifference == 1.25f && zDifference == 0f) || (zDifference == 1.25f && xDifference == 0f);
     }
 
-
     private void MoveTo(Vector3 targetPosition)
     {
         Occupier occupier = GetComponent<Occupier>();
@@ -47,4 +71,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Funzione per gestire il "End Turn".
+    public void EndTurn()
+    {
+        currentActionPoints = maxActionPoints; // Resetta gli ActionPoints al loro valore massimo.
+        Debug.Log("Action Points reset to: " + currentActionPoints);
+    }
 }

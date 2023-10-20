@@ -26,11 +26,13 @@ public class Occupier : MonoBehaviour
                 cubeStatus.isOccupied = false;
             }
             currentSquare = null;
+            
         }
     }
 
     private void SetSquareBeneathAsOccupied()
     {
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
@@ -41,6 +43,7 @@ public class Occupier : MonoBehaviour
                 if (cubeStatus)
                 {
                     cubeStatus.isOccupied = true;
+                    Debug.Log("La casella è occupata");
                 }
             }
         }

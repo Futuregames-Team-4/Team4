@@ -188,6 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7e2d24d31b040b790a4739fea08415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxActionPoints: 3
+  mouseDebug: 0
+  resetButton: {fileID: 4622317252865562653, guid: 1c44ea5b42cca477c8c3482bcf2bebd7, type: 3}
 --- !u!114 &9176724596648602724
 MonoBehaviour:
   m_ObjectHideFlags: 0
