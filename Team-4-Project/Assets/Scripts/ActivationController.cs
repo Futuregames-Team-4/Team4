@@ -7,10 +7,11 @@ public class ActivationController : MonoBehaviour
     [SerializeField]
     GameObject objectToActivate;
 
-    void Start()
+    void Awake()
     {
         objectToActivate.SetActive(false);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,4 +28,23 @@ public class ActivationController : MonoBehaviour
             objectToActivate.SetActive(false);
         }
     }
+
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        //Debug.Log("Activated.");
+    //        objectToActivate.SetActive(true);
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        //Debug.Log("Deactivated.");
+    //        objectToActivate.SetActive(false);
+    //    }
+    //}
 }
