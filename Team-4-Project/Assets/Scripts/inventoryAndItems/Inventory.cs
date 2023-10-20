@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Inventory : MonoBehaviour
 {
+    public bool[] isFull;
+    public GameObject[] slots;
     /*public int maxItems = 10;
     public List<ItemInstance> items = new();
     public bool AddItem(ItemInstance itemToAdd)
@@ -28,7 +30,7 @@ public class Inventory : MonoBehaviour
         return false;*/
 
     
-        public List<ItemData> items = new();
+        //public List<ItemData> items = new();
     
 }
 
