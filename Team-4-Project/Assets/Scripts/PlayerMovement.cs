@@ -34,11 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleMouseInput()         // Input of the mouse
     {
         if (useActionPoints && currentActionPoints <= 0) return;
-<<<<<<< Updated upstream
-        if (Input.GetMouseButtonDown(0) && hitInfo.collider != null && IsValidMove(hitInfo.collider.transform.position))
-=======
-        if (Input.GetMouseButtonDown(1) && IsValidMove(hitInfo.collider.transform.position))
->>>>>>> Stashed changes
+        if (Input.GetMouseButtonDown(0) && IsValidMove(hitInfo.collider.transform.position))
         {
             SquareStatus squareStatus = hitInfo.collider.GetComponent<SquareStatus>();
             if (squareStatus != null && !squareStatus.isOccupied)
@@ -47,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
                 ConsumeActionPoint();
             }
         }
-
     }
 
     private bool IsValidMove(Vector3 targetPosition)    // Moves up or down, not diagonally
@@ -68,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ConsumeActionPoint()   // Decrease action Points
     {
-        if (useActionPoints) 
+        if (useActionPoints)
         {
             currentActionPoints--;
         }
