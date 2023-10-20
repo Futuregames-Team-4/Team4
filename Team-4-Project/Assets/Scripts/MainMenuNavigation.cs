@@ -13,6 +13,8 @@ public class MainMenuNavigation : MonoBehaviour
     [SerializeField]
     GameObject creditsScreen;
 
+    [SerializeField]
+    GameObject controlsScreen;
 
     private void Awake()
     {
@@ -23,16 +25,18 @@ public class MainMenuNavigation : MonoBehaviour
     {
         titleScreen.SetActive(true);
         creditsScreen.SetActive(false);
-    }
-
-    public void OptionsButton()
-    {
-        Debug.Log("Opening Options");
+        controlsScreen.SetActive(false);
     }
 
     public void CreditsButton()
     {
         titleScreen.SetActive(false);
         creditsScreen.SetActive(true);
+    }
+
+    public void ControlsButton()
+    {
+        titleScreen.SetActive(false);
+        controlsScreen.SetActive(true);
     }
 }
