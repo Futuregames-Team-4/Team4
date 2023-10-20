@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Occupier : MonoBehaviour
 {
-    private Transform currentSquare; // Riferimento alla casella attuale
+    private Transform currentSquare; // Referred to the actual square
 
     private void Start()
     {
         SetSquareBeneathAsOccupied();
     }
 
-    public void MoveTo(Vector3 newPosition)
+    public void MoveToSquare(Vector3 newPosition)
     {
         FreeCurrentSquare();
         transform.position = newPosition;
