@@ -11,7 +11,6 @@ public class GridSystem : MonoBehaviour
     public int gridSizeY { get; private set; }
     private int offsetX;
     private int offsetY;
-    public bool isInitialized = false;
 
 
     private Transform bottomLeftSquare;
@@ -21,8 +20,6 @@ public class GridSystem : MonoBehaviour
         bottomLeftSquare = GetBottomLeftSquare();
         DetectAllSquaresInScene();
     }
-
-
 
     private void DetectAllSquaresInScene()
     {
@@ -68,7 +65,6 @@ public class GridSystem : MonoBehaviour
                 Debug.LogWarning("Posizione non valida: " + gridPos + " per l'oggetto " + square.name);
             }
         }
-        isInitialized = true;
     }
 
     private Transform GetBottomLeftSquare()
@@ -88,7 +84,6 @@ public class GridSystem : MonoBehaviour
         return bottomLeftSquare;
     }
 
-
     public Vector2Int GetGridPositionWithoutOffset(Vector3 worldPosition)
     {
         Vector3 relativePosition = worldPosition - bottomLeftSquare.position;
@@ -97,7 +92,6 @@ public class GridSystem : MonoBehaviour
 
         return new Vector2Int(x, y);
     }
-
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
