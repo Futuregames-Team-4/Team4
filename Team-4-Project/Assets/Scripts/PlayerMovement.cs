@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         gridSystem = FindObjectOfType<GridSystem>();
         currentActionPoints = maxActionPoints;
+        //Debug.Log(gridSystem.GetGridPosition(transform.position));
     }
 
 
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2Int previousPos = gridSystem.GetGridPosition(transform.position);
         Vector2Int newPos = gridSystem.GetGridPosition(targetPosition);
 
-        GetPlayerGridPosition();
+        //Debug.Log(gridSystem.GetGridPosition(transform.position));
 
     }
 

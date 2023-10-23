@@ -11,8 +11,6 @@ public class GridSystem : MonoBehaviour
     public int gridSizeY { get; private set; }
     private int offsetX;
     private int offsetY;
-
-
     private Transform bottomLeftSquare;
 
     private void Start()
@@ -88,14 +86,14 @@ public class GridSystem : MonoBehaviour
     {
         Vector3 relativePosition = worldPosition - bottomLeftSquare.position;
         int x = Mathf.FloorToInt(relativePosition.x / (cellSize + spacing));
-        int y = Mathf.FloorToInt(relativePosition.z / (cellSize + spacing));
+        int y = Mathf.FloorToInt((relativePosition.z - 2 * (cellSize + spacing)) / (cellSize + spacing));
 
         return new Vector2Int(x, y);
     }
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition)
     {
-        return new Vector3(gridPosition.x * (cellSize + spacing), 0, gridPosition.y * (cellSize + spacing));
+        return new Vector3(gridPosition.x * (cellSize + spacing), 0, gridPosition.y * (cellSize + spacing)) + bottomLeftSquare.position;
     }
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
@@ -103,4 +101,22 @@ public class GridSystem : MonoBehaviour
         Vector2Int posWithoutOffset = GetGridPositionWithoutOffset(worldPosition);
         return posWithoutOffset - new Vector2Int(offsetX, offsetY);
     }
+
+    void OnDrawGizmos()
+    {
+        if (grid == null) return;
+
+        for (int i = 0; i < gridSizeX; i++)
+        {
+            for (int j = 0; j < gridSizeY; j++)
+            {
+                if (grid[i, j] != null)
+                {
+                    Vector3 worldPos = GetWorldPosition(new Vector2Int(i, j));
+                    Gizmos.DrawWireCube(worldPos, new Vector3(cellSize, 0.1f, cellSize)); // Cambia l'altezza (0.1f) se necessario
+                }
+            }
+        }
+    }
+
 }

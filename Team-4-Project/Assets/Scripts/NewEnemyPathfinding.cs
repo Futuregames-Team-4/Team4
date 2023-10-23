@@ -20,9 +20,9 @@ public class NewEnemyPathfinding : MonoBehaviour
     {
         if (shouldFollowPlayer)
         {
-            Vector2Int playerPosition = gridSystem.GetGridPosition(player.transform.position);
-            FindPathToPlayer(playerPosition);
-            shouldFollowPlayer = false;  // Resetta il valore per evitare di richiamare continuamente FindPathToPlayer
+            Vector2Int playerGridPosition = gridSystem.GetGridPosition(player.transform.position - gridSystem.transform.position);
+            FindPathToPlayer(playerGridPosition);
+            shouldFollowPlayer = false;  // Reset the value to avoid continuously invoking FindPathToPlayer
         }
     }
 
@@ -30,7 +30,9 @@ public class NewEnemyPathfinding : MonoBehaviour
     public void FindPathToPlayer(Vector2Int playerPos)
     {
         this.playerPos = playerPos;
+        Debug.Log("Player Position" + playerPos);
         Vector2Int startPos = gridSystem.GetGridPosition(transform.position);
+        Debug.Log("Posizione di inzio:" + startPos);
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         Dictionary<Vector2Int, Vector2Int> cameFrom = new Dictionary<Vector2Int, Vector2Int>();
 
@@ -102,7 +104,6 @@ public class NewEnemyPathfinding : MonoBehaviour
                 transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
                 yield return null;
             }
-
             yield return new WaitForSeconds(0.5f); // puoi cambiare la durata dell'attesa per far muovere il nemico più velocemente o lentamente
         }
     }

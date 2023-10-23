@@ -625,7 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSystem: {fileID: 672493183}
   player: {fileID: 1726721112}
-  shouldFollowPlayer: 0
+  shouldFollowPlayer: 1
 --- !u!1001 &1217761248
 PrefabInstance:
   m_ObjectHideFlags: 0
