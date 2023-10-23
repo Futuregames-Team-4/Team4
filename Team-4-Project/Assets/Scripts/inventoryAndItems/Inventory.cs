@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     public bool[] isFull;
     public GameObject[] slots;
-    /*public int maxItems = 10;
+    public int maxItems = 6;
     public List<ItemInstance> items = new();
     public bool AddItem(ItemInstance itemToAdd)
     {
@@ -26,11 +26,11 @@ public class Inventory : MonoBehaviour
             items.Add(itemToAdd);
             return true;
         }
-        Debug.Log("No space in the inventory");
-        return false;*/
 
+        Debug.Log("No space in the inventory");
+        return false;
+    }
+}       
     
-        //public List<ItemData> items = new();
-    
-}
+
 

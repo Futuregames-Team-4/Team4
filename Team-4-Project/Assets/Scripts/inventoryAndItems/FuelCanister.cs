@@ -8,5 +8,18 @@ public class FuelCanister : MonoBehaviour
     {
         gameObject.GetComponent<FuelConsumption>().UseConsumable();
     }
-        
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        { // if left button pressed...
+            Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                // the object identified by hit.transform was clicked
+                // do whatever you want
+            }
+        }
+    }
 }
