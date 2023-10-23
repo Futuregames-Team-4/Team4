@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuNavigation : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class MainMenuNavigation : MonoBehaviour
         MainMenuButton();
     }
 
+    public void StartGame()
+    {
+        Debug.Log("Starting game");
+        SceneManager.LoadScene("GameScene");
+    }
+
     public void MainMenuButton()
     {
         titleScreen.SetActive(true);
@@ -38,5 +45,10 @@ public class MainMenuNavigation : MonoBehaviour
     {
         titleScreen.SetActive(false);
         controlsScreen.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
