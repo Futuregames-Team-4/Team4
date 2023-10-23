@@ -87,6 +87,7 @@ public class EnemyPathfinding : MonoBehaviour
             // Stop enemy movement by calling a method to reset the state.
            // StopMoving();
         }
+        isMoving = false;
     }
     private void FindAndMoveToPlayer()
     {
