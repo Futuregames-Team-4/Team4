@@ -7,11 +7,25 @@ public class NewEnemyPathfinding : MonoBehaviour
     public GridSystem gridSystem;
     private List<Vector2Int> path;
     private Vector2Int playerPos;
+    public PlayerMovement player;
+
+    public bool shouldFollowPlayer = false;
 
     void Start()
     {
         path = new List<Vector2Int>();
     }
+
+    void Update()
+    {
+        if (shouldFollowPlayer)
+        {
+            Vector2Int playerPosition = gridSystem.GetGridPosition(player.transform.position);
+            FindPathToPlayer(playerPosition);
+            shouldFollowPlayer = false;  // Resetta il valore per evitare di richiamare continuamente FindPathToPlayer
+        }
+    }
+
 
     public void FindPathToPlayer(Vector2Int playerPos)
     {
@@ -73,7 +87,22 @@ public class NewEnemyPathfinding : MonoBehaviour
     {
         foreach (Vector2Int pos in path)
         {
-            transform.position = gridSystem.GetWorldPosition(pos);
+            // Interpolazione lineare per un movimento più fluido
+            Vector3 startPosition = transform.position;
+            Vector3 targetPosition = gridSystem.GetWorldPosition(pos);
+            float journeyLength = Vector3.Distance(startPosition, targetPosition);
+            float startTime = Time.time;
+            float distanceCovered = (Time.time - startTime) * journeyLength;
+            float fractionOfJourney = distanceCovered / journeyLength;
+
+            while (fractionOfJourney < 1)
+            {
+                distanceCovered = (Time.time - startTime) * journeyLength;
+                fractionOfJourney = distanceCovered / journeyLength;
+                transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
+                yield return null;
+            }
+
             yield return new WaitForSeconds(0.5f); // puoi cambiare la durata dell'attesa per far muovere il nemico più velocemente o lentamente
         }
     }
