@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private GameStateManager gameStateManager;  // Game Manager
     private RaycastHit hitInfo;
     private GridSystem gridSystem;
+    private Vector2Int playerGridPosition;
 
     private void Start()
     {
@@ -88,6 +89,9 @@ public class PlayerMovement : MonoBehaviour
         // Aggiorna lo stato della griglia
         Vector2Int previousPos = gridSystem.GetGridPosition(transform.position);
         Vector2Int newPos = gridSystem.GetGridPosition(targetPosition);
+
+        GetPlayerGridPosition();
+
     }
 
     private void ConsumeActionPoint()   // Decrease action Points
@@ -101,5 +105,9 @@ public class PlayerMovement : MonoBehaviour
     public void EndTurn()               // End Player Turn
     {
         currentActionPoints = maxActionPoints;
+    }
+    public Vector2Int GetPlayerGridPosition()
+    {
+            return playerGridPosition = gridSystem.GetGridPosition(transform.position);
     }
 }
