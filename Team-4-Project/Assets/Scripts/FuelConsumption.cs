@@ -55,6 +55,10 @@ public class FuelConsumption : MonoBehaviour
         {
             MovementCost();
         }
+        if (fuel <= 0) 
+        {
+            fuel = 0;
+        }
     }
 
     private void vectorSize(int x, int y)
