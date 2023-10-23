@@ -74,7 +74,7 @@ public class EnemyPathfinding : MonoBehaviour
 
         if (!isMoving)
         {
-            if (distanceToPlayer < 1.0f)
+            if (distanceToPlayer < 1.25f)
             {
                 targetPosition = CalculateTargetTilePosition(player.transform.position);
                 FindAndMoveToPlayer();
@@ -82,7 +82,7 @@ public class EnemyPathfinding : MonoBehaviour
         }
 
         // If the player moves out of a certain range, you can stop the enemy by checking the distance.
-        if (isMoving && distanceToPlayer > 2.0f)
+        if (isMoving && distanceToPlayer > 2.5f)
         {
             // Stop enemy movement by calling a method to reset the state.
            // StopMoving();
