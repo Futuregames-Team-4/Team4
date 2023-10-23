@@ -450,7 +450,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -838.5554, y: -364.80072}
-  m_SizeDelta: {x: 150, y: 300}
+  m_SizeDelta: {x: 100, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &65925790
 MonoBehaviour:
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.930992, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3219,6 +3219,14 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Bias
       value: 1.7
       objectReference: {fileID: 0}
+    - target: {fileID: 7608406274253330537, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
+      propertyPath: fuelLeft
+      value: 
+      objectReference: {fileID: 65925789}
+    - target: {fileID: 7875432678367713860, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
+      propertyPath: fuelLeft
+      value: 
+      objectReference: {fileID: 65925789}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4907,7 +4915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1614788728
 Transform:
   m_ObjectHideFlags: 0

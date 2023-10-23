@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class VisionController : MonoBehaviour
 {
-
     FuelConsumption fuel;
     Light light;
     CapsuleCollider capsuleTrigger;
