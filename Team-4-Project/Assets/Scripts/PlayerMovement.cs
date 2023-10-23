@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public bool useActionPoints = true;         // Enable or disale ActionPoints
     private GameStateManager gameStateManager;  // Game Manager
     private RaycastHit hitInfo;
+    private GridSystem gridSystem;
 
     private void Start()
     {
+        gridSystem = FindObjectOfType<GridSystem>();
         currentActionPoints = maxActionPoints;
     }
+
 
     private void Update()
     {
@@ -45,20 +48,46 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsValidMove(Vector3 targetPosition)    // Moves up or down, not diagonally
+    private bool IsValidMove(Vector3 targetPosition)
     {
+        float distanceBetweenCells = gridSystem.cellSize + gridSystem.spacing;
+
         float xDifference = Mathf.Abs(targetPosition.x - transform.position.x);
         float zDifference = Mathf.Abs(targetPosition.z - transform.position.z);
-        return (xDifference == 1.25f && zDifference == 0f) || (zDifference == 1.25f && xDifference == 0f);
+
+        // Controlla se la mossa è valida
+        bool isAdjacentMove = (xDifference == distanceBetweenCells && zDifference == 0f)
+                              || (zDifference == distanceBetweenCells && xDifference == 0f);
+
+        if (!isAdjacentMove)
+            return false;
+
+        // Verifica se la casella target è occupata
+        RaycastHit hit;
+        if (Physics.Raycast(targetPosition + Vector3.up * 5f, Vector3.down, out hit)) // Proietta un ray verso il basso dalla posizione target
+        {
+            if (hit.collider.CompareTag("Square"))
+            {
+                SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
+                if (squareStatus && squareStatus.isOccupied)
+                    return false; // Casella occupata
+            }
+        }
+
+        return true; // Casella libera
     }
 
-    private void MoveTo(Vector3 targetPosition)         // Move the object
+    private void MoveTo(Vector3 targetPosition)
     {
         Occupier occupier = GetComponent<Occupier>();
         if (occupier)
         {
             occupier.MoveToSquare(targetPosition);
         }
+
+        // Aggiorna lo stato della griglia
+        Vector2Int previousPos = gridSystem.GetGridPosition(transform.position);
+        Vector2Int newPos = gridSystem.GetGridPosition(targetPosition);
     }
 
     private void ConsumeActionPoint()   // Decrease action Points

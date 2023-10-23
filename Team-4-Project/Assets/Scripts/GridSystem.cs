@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
@@ -10,7 +11,7 @@ public class GridSystem : MonoBehaviour
     public int gridSizeY { get; private set; }
     private int offsetX;
     private int offsetY;
-    public bool[,] occupiedGrid;
+    public bool isInitialized = false;
 
 
     private Transform bottomLeftSquare;
@@ -25,7 +26,6 @@ public class GridSystem : MonoBehaviour
 
     private void DetectAllSquaresInScene()
     {
-        occupiedGrid = new bool[gridSizeX, gridSizeY];
 
         SquareStatus[] squares = FindObjectsOfType<SquareStatus>();
 
@@ -68,6 +68,7 @@ public class GridSystem : MonoBehaviour
                 Debug.LogWarning("Posizione non valida: " + gridPos + " per l'oggetto " + square.name);
             }
         }
+        isInitialized = true;
     }
 
     private Transform GetBottomLeftSquare()
@@ -95,6 +96,12 @@ public class GridSystem : MonoBehaviour
         int y = Mathf.FloorToInt(relativePosition.z / (cellSize + spacing));
 
         return new Vector2Int(x, y);
+    }
+
+
+    public Vector3 GetWorldPosition(Vector2Int gridPosition)
+    {
+        return new Vector3(gridPosition.x * (cellSize + spacing), 0, gridPosition.y * (cellSize + spacing));
     }
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
