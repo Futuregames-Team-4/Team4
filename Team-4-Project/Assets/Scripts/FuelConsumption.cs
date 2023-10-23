@@ -47,6 +47,12 @@ public class FuelConsumption : MonoBehaviour
                 vectorSize(100, 300);
                 break;
         }
+        GetComponent<PlayerMovement>();
+
+        if (PlayerMovement.currentActionPoints == 0)
+        {
+            MovementCost();
+        }
     }
 
     private void vectorSize(int x, int y)
@@ -57,6 +63,8 @@ public class FuelConsumption : MonoBehaviour
     public void MovementCost()
     {
         fuel--;
+        Debug.Log("Minus 1 fuel");
+       PlayerMovement.currentActionPoints = 3;
     }
 
     public void UseConsumable()
