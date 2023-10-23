@@ -5,13 +5,13 @@ using UnityEngine;
 public class VisionController : MonoBehaviour
 {
     FuelConsumption fuel;
-    Light light;
+    Light lanternLight;
     CapsuleCollider capsuleTrigger;
 
     private void Awake()
     {
         fuel = GetComponent<FuelConsumption>();
-        light = GetComponent<Light>();
+        lanternLight = GetComponentInChildren<Light>();
         capsuleTrigger = GetComponent<CapsuleCollider>();
     }
 
@@ -20,29 +20,29 @@ public class VisionController : MonoBehaviour
         switch (fuel.fuel)
         {
             case 0: 
-                light.range = 0.5f;
+                lanternLight.range = 0.5f;
                 capsuleTrigger.radius = 0.5f;
                 break;
             case 1: 
             case 2:
             case 3:
-                light.range = 2f;
+                lanternLight.range = 3f;
                 capsuleTrigger.radius = 2f;
                 break;
             case 4:
             case 5:
             case 6:
-                light.range = 3f;
+                lanternLight.range = 5f;
                 capsuleTrigger.radius = 3f;
                 break;
             case 7:
             case 8:
             case 9:
-                light.range = 4f;
+                lanternLight.range = 8f;
                 capsuleTrigger.radius = 4f;
                 break;
             case 10:
-                light.range = 5f;
+                lanternLight.range = 10f;
                 capsuleTrigger.radius = 5f;
                 break;
         }

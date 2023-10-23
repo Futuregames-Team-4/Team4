@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FuelConsumption : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class FuelConsumption : MonoBehaviour
         switch (fuel)
         {
             case 0:
+                SceneManager.LoadScene("GameOverScene");
                 vectorSize(100, 0);
                 break;
             case 1:
@@ -64,7 +66,7 @@ public class FuelConsumption : MonoBehaviour
     {
         fuel--;
         Debug.Log("Minus 1 fuel");
-       PlayerMovement.currentActionPoints = 3;
+        PlayerMovement.currentActionPoints = 3;
     }
 
     public void UseConsumable()

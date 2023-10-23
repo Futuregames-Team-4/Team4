@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour
 {
@@ -17,11 +18,18 @@ public class InGameMenu : MonoBehaviour
     [SerializeField]
     GameObject mainCamera;
 
+    [SerializeField]
+    GameObject pauseText;
+
+    [SerializeField]
+    GameObject controlsText;
+
     bool isPaused = false;
 
     private void Awake()
     {
         pauseMenu.SetActive(false);
+        controlsText.SetActive(false);
     }
 
     private void Update()
@@ -48,6 +56,23 @@ public class InGameMenu : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenu.SetActive(isPaused);
+    }
+
+    public void ControlsButton()
+    {
+        pauseText.SetActive(false);
+        controlsText.SetActive(true);
+    }
+
+    public void BackButton()
+    {
+        pauseText.SetActive(true);
+        controlsText.SetActive(false);
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
     void ToggleOverviewMap()
