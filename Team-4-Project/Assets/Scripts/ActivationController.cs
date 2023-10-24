@@ -7,7 +7,7 @@ public class ActivationController : MonoBehaviour
     [SerializeField]
     GameObject objectToActivate;
 
-    void Start()
+    void Awake()
     {
         objectToActivate.SetActive(false);
     }

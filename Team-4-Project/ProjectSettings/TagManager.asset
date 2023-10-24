@@ -5,17 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Square
+  - NPC1
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Box Collider
   - Water
   - UI
+  - Tiles
   - 
-  - 
-  - 
-  - 
+  - Player
+  - UILayer
   - 
   - 
   - 
@@ -42,6 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Tilemap
+  - name: UI
     uniqueID: 79096019
     locked: 0

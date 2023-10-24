@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6672165324571827727}
   - component: {fileID: 3726821026096236902}
   - component: {fileID: 2662544167025823996}
+  - component: {fileID: 7721072460469960548}
   m_Layer: 0
   m_Name: PlaceholderTile
   m_TagString: Square
@@ -118,3 +119,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6520bc1f4bd34431fbe91eca6cc109ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOccupied: 0
+--- !u!114 &7721072460469960548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427824901470239660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6658d19eaad0fc246be63700b30a3113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWalkable: 1
