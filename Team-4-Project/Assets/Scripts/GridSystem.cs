@@ -12,6 +12,8 @@ public class GridSystem : MonoBehaviour
     private int offsetX;
     private int offsetY;
     private Transform bottomLeftSquare;
+    public bool[,] occupiedGrid; // new addition
+
 
     private void Start()
     {
@@ -51,18 +53,22 @@ public class GridSystem : MonoBehaviour
             for (int j = 0; j < gridSizeY; j++)
                 grid[i, j] = null;
 
+        occupiedGrid = new bool[gridSizeX, gridSizeY]; // new addition
+
         foreach (var square in squares)
         {
             Vector2Int gridPos = GetGridPosition(square.transform.position);
             if (gridPos.x >= 0 && gridPos.x < gridSizeX && gridPos.y >= 0 && gridPos.y < gridSizeY)
             {
                 grid[gridPos.x, gridPos.y] = square.transform;
+                occupiedGrid[gridPos.x, gridPos.y] = square.isOccupied; // new addition
             }
             else
             {
                 Debug.LogWarning("Posizione non valida: " + gridPos + " per l'oggetto " + square.name);
             }
         }
+
     }
 
     private Transform GetBottomLeftSquare()
@@ -81,31 +87,6 @@ public class GridSystem : MonoBehaviour
         }
         return bottomLeftSquare;
     }
-
-    public bool IsWalkable(Vector2Int gridPos, bool isStartingPosition = false)
-    {
-        // Controllo se la posizione fornita è valida (dentro i confini della griglia)
-        if (gridPos.x < 0 || gridPos.x >= gridSizeX || gridPos.y < 0 || gridPos.y >= gridSizeY)
-        {
-            return false; // Fuori dai confini, quindi non camminabile
-        }
-
-        // Se la posizione nella griglia è null (non c'è un quadrato lì) o il quadrato è occupato, restituisci false
-        if (grid[gridPos.x, gridPos.y] == null)
-        {
-            return false;
-        }
-
-        SquareStatus squareStatus = grid[gridPos.x, gridPos.y].GetComponent<SquareStatus>();
-        if (squareStatus && squareStatus.isOccupied && !isStartingPosition)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-
 
     public Vector2Int GetGridPositionWithoutOffset(Vector3 worldPosition)
     {

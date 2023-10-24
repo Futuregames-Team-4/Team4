@@ -29,6 +29,8 @@ public class NewEnemyPathfinding : MonoBehaviour
 
     public void FindPathToPlayer(Vector2Int playerPos)
     {
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
         this.playerPos = playerPos;
         Debug.Log("Player Position" + playerPos);
         Vector2Int startPos = gridSystem.GetGridPosition(transform.position);
@@ -48,10 +50,11 @@ public class NewEnemyPathfinding : MonoBehaviour
 
             foreach (Vector2Int neighbor in GetNeighbors(current))
             {
-                if (!cameFrom.ContainsKey(neighbor))
+                if (!cameFrom.ContainsKey(neighbor) && !visited.Contains(neighbor))
                 {
                     queue.Enqueue(neighbor);
                     cameFrom[neighbor] = current;
+                    visited.Add(neighbor);
                 }
             }
         }
@@ -60,34 +63,113 @@ public class NewEnemyPathfinding : MonoBehaviour
     private List<Vector2Int> GetNeighbors(Vector2Int pos)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-        neighbors.Add(new Vector2Int(pos.x + 1, pos.y));
-        neighbors.Add(new Vector2Int(pos.x - 1, pos.y));
-        neighbors.Add(new Vector2Int(pos.x, pos.y + 1));
-        neighbors.Add(new Vector2Int(pos.x, pos.y - 1));
+
+        Vector2Int[] potentialNeighbors =
+        {
+        new Vector2Int(pos.x + 1, pos.y),
+        new Vector2Int(pos.x - 1, pos.y),
+        new Vector2Int(pos.x, pos.y + 1),
+        new Vector2Int(pos.x, pos.y - 1)
+    };
+
+        foreach (var potential in potentialNeighbors)
+        {
+            if (IsValidDestination(potential))
+            {
+                neighbors.Add(potential);
+            }
+        }
 
         return neighbors;
     }
 
+
+    private void AddNeighborIfValid(List<Vector2Int> neighbors, Vector2Int potentialNeighbor)
+    {
+        if (IsValidGridPosition(potentialNeighbor) && !gridSystem.occupiedGrid[potentialNeighbor.x, potentialNeighbor.y])
+        {
+            neighbors.Add(potentialNeighbor);
+        }
+    }
+
+    private bool IsValidGridPosition(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < gridSystem.gridSizeX && pos.y >= 0 && pos.y < gridSystem.gridSizeY;
+    }
+
+    private bool IsValidDestination(Vector2Int gridPosition)
+    {
+        if (gridPosition.x < 0 || gridPosition.y < 0 || gridPosition.x >= gridSystem.gridSizeX || gridPosition.y >= gridSystem.gridSizeY)
+            return false;
+
+        Transform potentialSquare = gridSystem.grid[gridPosition.x, gridPosition.y];
+
+        if (potentialSquare != null && potentialSquare.CompareTag("Square"))
+        {
+            SquareStatus squareStatus = potentialSquare.GetComponent<SquareStatus>();
+            if (squareStatus != null && !squareStatus.isOccupied)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
     private void CreatePath(Dictionary<Vector2Int, Vector2Int> cameFrom)
     {
         Vector2Int current = gridSystem.GetGridPosition(transform.position);
-        path.Clear();
+        List<Vector2Int> reversedPath = new List<Vector2Int>();
 
         while (current != playerPos)
         {
-            path.Add(current);
-            current = cameFrom[current];
+            if (IsValidDestination(current))
+            {
+                reversedPath.Add(current);
+            }
+            else
+            {
+                // If the current node is not valid, try to find an alternative neighbor.
+                bool foundAlternative = false;
+
+                foreach (Vector2Int neighbor in GetNeighbors(current))
+                {
+                    if (IsValidDestination(neighbor) && cameFrom.ContainsKey(neighbor))
+                    {
+                        current = neighbor; // set the alternative neighbor as the new current node
+                        foundAlternative = true;
+                        break; // exit the loop once a valid alternative is found
+                    }
+                }
+
+                if (!foundAlternative)
+                {
+                    Debug.LogError("Failed to find a valid path!");
+                    return;
+                }
+            }
+
+            current = cameFrom[current]; // trace back to the next node in the path
         }
 
-        if (path.Count > 1)
-            path.RemoveAt(path.Count - 1);
+        path = reversedPath;
+
         StartCoroutine(FollowPath());
     }
+
 
     IEnumerator FollowPath()
     {
         foreach (Vector2Int pos in path)
         {
+            if (!IsValidDestination(pos))
+            {
+                Debug.LogWarning("Attempting to move to an invalid position: " + pos);
+                continue; // Skip this iteration and continue with the next grid position
+            }
             // Interpolazione lineare per un movimento più fluido
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = gridSystem.GetWorldPosition(pos);
