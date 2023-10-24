@@ -2,61 +2,88 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
-    public static GameStateManager Instance { get; private set; } // Singleton instance
-    
-    public enum GameState { 
-        GameStateStart,     // Show Main Menu
-        GameStatePlaying,   // Player's turn
-        GameStateEnemyTurn, // Enemy's turn
-        GameStatePaused,    // Show the Pause Menu
-        GameStateEnd }      // Game Over / Victory!
+    public enum GameState
+    {
+        Start,     // Show Main Menu
+        PlayerTurn,   // Player's turn
+        EnemyTurn, // Enemy's turn
+        Paused,    // Show the Pause Menu
+        End         // Game Over or Victory
+    }
+    public static GameStateManager Instance; // Singleton reference
 
-    public static GameState CurrentState { get; private set; } = GameState.GameStateStart;
+    public GameState CurrentState { get; private set; } = GameState.Start;
 
-    private PlayerMovement playerMovement;
+    [SerializeField] private PlayerMovement player;
+    [SerializeField] private NewEnemyPathfinding enemy;
 
     private void Awake()
     {
-        // Singleton logic
-        if (Instance != null && Instance != this)
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
         {
             Destroy(gameObject);
-            return; // This is important to stop further execution for the duplicate instance.
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        playerMovement = FindObjectOfType<PlayerMovement>();
-        OnGameStateChanged += HandleGameStateChange;
-    }
-
-    private void OnDestroy()
-    {
-        OnGameStateChanged -= HandleGameStateChange;
-    }
-
-    public delegate void GameStateChanged(GameState newState);
-    public event GameStateChanged OnGameStateChanged;
-
-    public void SetGameState(GameState newState)
-    {
-        if (newState != CurrentState)
-        {
-            CurrentState = newState;
-            OnGameStateChanged?.Invoke(newState);
+            return;
         }
     }
 
-    private void HandleGameStateChange(GameState newState)
+    private void Start()
     {
-        if (newState == GameState.GameStatePlaying)
+        player = FindObjectOfType<PlayerMovement>();
+        enemy = FindObjectOfType<NewEnemyPathfinding>();
+
+        // Begin the game with the player's turn
+        StartPlayerTurn();
+    }
+
+    private void Update()
+    {
+        switch (CurrentState)
         {
-            playerMovement.enabled = true;
+            case GameState.PlayerTurn:
+                if (PlayerMovement.currentActionPoints <= 0)
+                {
+                    EndPlayerTurn();
+                }
+                break;
+
+            case GameState.EnemyTurn:
+                // Enemy logic is handled within the enemy's script
+                break;
+
+            // Additional cases can be added later
+            case GameState.Start:
+            case GameState.End:
+            case GameState.Paused:
+                break;
         }
-        else 
-        {
-            playerMovement.enabled = false;
-        }
+    }
+
+    public void StartPlayerTurn()
+    {
+        CurrentState = GameState.PlayerTurn;
+        player.useActionPoints = true;  // Enable player input
+        PlayerMovement.currentActionPoints = player.maxActionPoints;
+    }
+
+    public void EndPlayerTurn()
+    {
+        CurrentState = GameState.EnemyTurn;
+        player.useActionPoints = false; // Disable player input
+        StartEnemyTurn();
+    }
+
+    public void StartEnemyTurn()
+    {
+        enemy.shouldFollowPlayer = true; // This will make the enemy calculate the path and start following the player
+    }
+
+    public void EndEnemyTurn()
+    {
+        CurrentState = GameState.PlayerTurn;
+        StartPlayerTurn(); // Start the player's turn again
     }
 }

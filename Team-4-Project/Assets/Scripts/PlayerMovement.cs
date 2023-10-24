@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         gridSystem = FindObjectOfType<GridSystem>();
         currentActionPoints = maxActionPoints;
-        //Debug.Log(gridSystem.GetGridPosition(transform.position));
+        GameStateManager.Instance.StartPlayerTurn(); // End the enemy's turn
     }
 
 
@@ -100,8 +100,14 @@ public class PlayerMovement : MonoBehaviour
         if (useActionPoints)
         {
             currentActionPoints--;
+
+            if (currentActionPoints <= 0)
+            {
+                GameStateManager.Instance.EndPlayerTurn();
+            }
         }
     }
+
 
     public void EndTurn()               // End Player Turn
     {

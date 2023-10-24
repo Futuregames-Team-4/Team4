@@ -187,5 +187,6 @@ public class NewEnemyPathfinding : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f); // puoi cambiare la durata dell'attesa per far muovere il nemico più velocemente o lentamente
         }
+        GameStateManager.Instance.EndEnemyTurn();
     }
 }
