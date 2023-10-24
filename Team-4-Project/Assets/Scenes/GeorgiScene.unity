@@ -1025,7 +1025,6 @@ GameObject:
   - component: {fileID: 149375168}
   - component: {fileID: 149375167}
   - component: {fileID: 149375166}
-  - component: {fileID: 149375165}
   m_Layer: 3
   m_Name: Hitbox
   m_TagString: Player
@@ -1048,20 +1047,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1538985636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &149375165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149375163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4dc06d5b8b86794dbb9f26237c23013, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fuelLeft: {fileID: 1529486971}
-  fuel: 10
 --- !u!65 &149375166
 BoxCollider:
   m_ObjectHideFlags: 0
