@@ -56,7 +56,7 @@ public class EnemyAttack : MonoBehaviour
         {
             Debug.Log("You are hit!");
             // Apply damage to the player (you can modify this part)
-            FuelConsumption fuel = player.GetComponent<FuelConsumption>();
+            FuelConsumption fuel = player.transform.parent.GetComponent<FuelConsumption>();
             fuel.HitByEnemy();
             hasAttacked = true; // Set the flag to true after attacking
         }
