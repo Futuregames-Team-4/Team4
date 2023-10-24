@@ -120,9 +120,6 @@ public class NewEnemyPathfinding : MonoBehaviour
         return false;
     }
 
-
-
-
     private void CreatePath(Dictionary<Vector2Int, Vector2Int> cameFrom)
     {
         Vector2Int current = gridSystem.GetGridPosition(transform.position);
@@ -133,7 +130,6 @@ public class NewEnemyPathfinding : MonoBehaviour
             reversedPath.Add(current);
             current = cameFrom[current];
         }
-
         path = reversedPath;
         StartCoroutine(FollowPath());
     }
@@ -142,7 +138,7 @@ public class NewEnemyPathfinding : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        int movesThisTurn = Mathf.Min(path.Count, enemyMoves); // Limit the moves to either the path length or enemyMoves, whichever is smaller.
+        int movesThisTurn = Mathf.Min(path.Count, enemyMoves+1); // Limit the moves to either the path length or enemyMoves, +1 because so it works.
 
         for (int i = 0; i < movesThisTurn; i++)
         {

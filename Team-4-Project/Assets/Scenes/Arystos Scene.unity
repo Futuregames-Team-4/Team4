@@ -874,6 +874,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1726721112}
     - target: {fileID: 4058570180602200674, guid: 501952118b1506a4082d21361253f66b, type: 3}
+      propertyPath: enemyMoves
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4058570180602200674, guid: 501952118b1506a4082d21361253f66b, type: 3}
       propertyPath: gridSystem
       value: 
       objectReference: {fileID: 672493183}
