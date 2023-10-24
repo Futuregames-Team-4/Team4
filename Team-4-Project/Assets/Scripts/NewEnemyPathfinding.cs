@@ -10,6 +10,8 @@ public class NewEnemyPathfinding : MonoBehaviour
     public PlayerMovement player;
 
     public bool shouldFollowPlayer = false;
+    public int enemyMoves = 2; // Default to 3 moves per turn, but you can change this value in the Unity editor.
+
 
     void Start()
     {
@@ -64,6 +66,7 @@ public class NewEnemyPathfinding : MonoBehaviour
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
 
+        // Prioritize horizontal movement
         Vector2Int[] potentialNeighbors =
         {
         new Vector2Int(pos.x + 1, pos.y),
@@ -82,6 +85,7 @@ public class NewEnemyPathfinding : MonoBehaviour
 
         return neighbors;
     }
+
 
 
     private void AddNeighborIfValid(List<Vector2Int> neighbors, Vector2Int potentialNeighbor)
@@ -126,45 +130,23 @@ public class NewEnemyPathfinding : MonoBehaviour
 
         while (current != playerPos)
         {
-            if (IsValidDestination(current))
-            {
-                reversedPath.Add(current);
-            }
-            else
-            {
-                // If the current node is not valid, try to find an alternative neighbor.
-                bool foundAlternative = false;
-
-                foreach (Vector2Int neighbor in GetNeighbors(current))
-                {
-                    if (IsValidDestination(neighbor) && cameFrom.ContainsKey(neighbor))
-                    {
-                        current = neighbor; // set the alternative neighbor as the new current node
-                        foundAlternative = true;
-                        break; // exit the loop once a valid alternative is found
-                    }
-                }
-
-                if (!foundAlternative)
-                {
-                    Debug.LogError("Failed to find a valid path!");
-                    return;
-                }
-            }
-
-            current = cameFrom[current]; // trace back to the next node in the path
+            reversedPath.Add(current);
+            current = cameFrom[current];
         }
 
         path = reversedPath;
-
         StartCoroutine(FollowPath());
     }
 
 
+
     IEnumerator FollowPath()
     {
-        foreach (Vector2Int pos in path)
+        int movesThisTurn = Mathf.Min(path.Count, enemyMoves); // Limit the moves to either the path length or enemyMoves, whichever is smaller.
+
+        for (int i = 0; i < movesThisTurn; i++)
         {
+            Vector2Int pos = path[i];
             if (!IsValidDestination(pos))
             {
                 Debug.LogWarning("Attempting to move to an invalid position: " + pos);
@@ -189,4 +171,5 @@ public class NewEnemyPathfinding : MonoBehaviour
         }
         GameStateManager.Instance.EndEnemyTurn();
     }
+
 }
