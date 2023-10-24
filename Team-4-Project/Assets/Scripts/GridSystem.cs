@@ -18,6 +18,28 @@ public class GridSystem : MonoBehaviour
     private void Start()
     {
         bottomLeftSquare = GetBottomLeftSquare();
+        if (bottomLeftSquare != null)
+        {
+            // Set cellSize based on the scale of the detected square
+            cellSize = bottomLeftSquare.localScale.x;
+
+            // Find the nearest neighbor of the bottomLeftSquare to determine spacing
+            SquareStatus[] squares = FindObjectsOfType<SquareStatus>();
+            float minDistance = float.MaxValue;
+            foreach (var square in squares)
+            {
+                if (square.transform != bottomLeftSquare)
+                {
+                    float distance = Vector3.Distance(square.transform.position, bottomLeftSquare.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                    }
+                }
+            }
+            // Set spacing as difference between minDistance and cellSize
+            spacing = minDistance - cellSize;
+        }
         DetectAllSquaresInScene();
     }
 
