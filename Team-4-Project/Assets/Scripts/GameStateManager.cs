@@ -34,8 +34,6 @@ public class GameStateManager : MonoBehaviour
     {
         player = FindObjectOfType<PlayerMovement>();
         enemy = FindObjectOfType<NewEnemyPathfinding>();
-
-        // Begin the game with the player's turn
         StartPlayerTurn();
     }
 
