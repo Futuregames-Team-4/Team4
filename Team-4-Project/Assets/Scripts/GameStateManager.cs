@@ -69,14 +69,22 @@ public class GameStateManager : MonoBehaviour
 
     public void EndPlayerTurn()
     {
-        CurrentState = GameState.EnemyTurn;
         player.useActionPoints = false; // Disable player input
         StartEnemyTurn();
     }
 
     public void StartEnemyTurn()
     {
-        enemy.shouldFollowPlayer = true; // This will make the enemy calculate the path and start following the player
+        int playerCurrentActionPoints = PlayerMovement.currentActionPoints;
+        CurrentState = GameState.EnemyTurn;
+        if (!enemy.enabled)
+        {
+            EndEnemyTurn();
+            return;
+        } else
+        {
+            enemy.shouldFollowPlayer = true; // This will make the enemy calculate the path and start following the player
+        }
     }
 
     public void EndEnemyTurn()

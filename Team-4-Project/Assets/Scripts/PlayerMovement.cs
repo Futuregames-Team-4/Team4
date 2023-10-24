@@ -108,14 +108,4 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
-
-    public void EndTurn()               // End Player Turn
-    {
-        currentActionPoints = maxActionPoints;
-    }
-    public Vector2Int GetPlayerGridPosition()
-    {
-            return playerGridPosition = gridSystem.GetGridPosition(transform.position);
-    }
 }

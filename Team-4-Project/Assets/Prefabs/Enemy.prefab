@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToActivate: {fileID: 4052076123645129049}
+  scriptComponent: {fileID: 4058570180602200674}
 --- !u!65 &5194817663049290853
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,6 +116,7 @@ MonoBehaviour:
   gridSystem: {fileID: 3120898188670652479, guid: 172f529a78e584e6698e2c0020945361, type: 3}
   player: {fileID: 587095744406317947, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
   shouldFollowPlayer: 0
+  enemyMoves: 2
 --- !u!1001 &3817561640274529288
 PrefabInstance:
   m_ObjectHideFlags: 0

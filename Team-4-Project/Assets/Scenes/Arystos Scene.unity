@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6094813291113788412, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6094813291113788412, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
       propertyPath: m_LocalPosition.y
@@ -881,6 +881,10 @@ PrefabInstance:
       propertyPath: gridSystem
       value: 
       objectReference: {fileID: 672493183}
+    - target: {fileID: 6286743584529247703, guid: 501952118b1506a4082d21361253f66b, type: 3}
+      propertyPath: scriptComponent
+      value: 
+      objectReference: {fileID: 1208314573}
     - target: {fileID: 7518060930584651963, guid: 501952118b1506a4082d21361253f66b, type: 3}
       propertyPath: m_Name
       value: Enemy
