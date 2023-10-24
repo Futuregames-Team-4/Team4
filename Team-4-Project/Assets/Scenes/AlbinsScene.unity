@@ -1827,6 +1827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 750272958}
+  - component: {fileID: 750272959}
   m_Layer: 0
   m_Name: Tiles
   m_TagString: Untagged
@@ -1867,6 +1868,20 @@ Transform:
   - {fileID: 67711668}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &750272959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750272957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: befa79c9997054e67bb6c39a23da0f1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSize: 1
+  spacing: 0.25
 --- !u!1001 &766224473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4647,7 +4662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7057846630131770065, guid: 4a93bc5941013f9469cdfc93a626efd6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8393486607797477064, guid: 4a93bc5941013f9469cdfc93a626efd6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
