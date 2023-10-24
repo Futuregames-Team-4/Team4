@@ -82,6 +82,31 @@ public class GridSystem : MonoBehaviour
         return bottomLeftSquare;
     }
 
+    public bool IsWalkable(Vector2Int gridPos, bool isStartingPosition = false)
+    {
+        // Controllo se la posizione fornita è valida (dentro i confini della griglia)
+        if (gridPos.x < 0 || gridPos.x >= gridSizeX || gridPos.y < 0 || gridPos.y >= gridSizeY)
+        {
+            return false; // Fuori dai confini, quindi non camminabile
+        }
+
+        // Se la posizione nella griglia è null (non c'è un quadrato lì) o il quadrato è occupato, restituisci false
+        if (grid[gridPos.x, gridPos.y] == null)
+        {
+            return false;
+        }
+
+        SquareStatus squareStatus = grid[gridPos.x, gridPos.y].GetComponent<SquareStatus>();
+        if (squareStatus && squareStatus.isOccupied && !isStartingPosition)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
     public Vector2Int GetGridPositionWithoutOffset(Vector3 worldPosition)
     {
         Vector3 relativePosition = worldPosition - bottomLeftSquare.position;

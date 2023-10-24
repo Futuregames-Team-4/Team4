@@ -11,7 +11,7 @@ public class Dice : MonoBehaviour
         if (dice == 1)
         {
             //Lose all fuel
-            GetComponent<FuelConsumption>().KilledByEnemy();
+            //GetComponent<FuelConsumption>().KilledByEnemy();
         }
 
         if (dice >= 4)

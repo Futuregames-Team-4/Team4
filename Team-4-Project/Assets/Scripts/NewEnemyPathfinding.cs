@@ -79,7 +79,6 @@ public class NewEnemyPathfinding : MonoBehaviour
             current = cameFrom[current];
         }
 
-        path.Reverse();
         if (path.Count > 1)
             path.RemoveAt(path.Count - 1);
         StartCoroutine(FollowPath());
