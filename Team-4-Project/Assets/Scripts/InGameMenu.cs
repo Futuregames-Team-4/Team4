@@ -72,6 +72,7 @@ public class InGameMenu : MonoBehaviour
 
     public void MainMenuButton()
     {
+        TogglePause();
         SceneManager.LoadScene("Main Menu");
     }
 
