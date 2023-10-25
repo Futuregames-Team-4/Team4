@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class LightRefill : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.name == "Player")
+        FuelConsumption fuel = other.transform.parent.GetComponent<FuelConsumption>();
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<FuelConsumption>().UseConsumable();
+            Debug.Log("PICK UP MF");
+            //collision.gameObject.GetComponent<FuelConsumption>().UseConsumable();
+            
+            fuel.UseConsumable();
         }
     }
 }

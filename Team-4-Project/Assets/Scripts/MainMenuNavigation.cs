@@ -25,7 +25,7 @@ public class MainMenuNavigation : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Starting game");
-        SceneManager.LoadScene("newMainScene");
+        SceneManager.LoadScene("GeorgiScene");
     }
 
     public void MainMenuButton()
