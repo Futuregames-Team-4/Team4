@@ -14,7 +14,6 @@ public class LightRefill : MonoBehaviour
         {
             FuelConsumption fuel = other.transform.parent.GetComponent<FuelConsumption>();
             Debug.Log("PICK UP MF");
-            //collision.gameObject.GetComponent<FuelConsumption>().UseConsumable();
             
             fuel.UseConsumable();
 
