@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Square
   - NPC1
+  - Enemy
   layers:
   - Default
   - TransparentFX
