@@ -80,6 +80,6 @@ public class FuelConsumption : MonoBehaviour
 
     public void HitByEnemy()
     {
-        fuel = fuel - 5;
+        fuel = fuel - 3;
     }
 }
