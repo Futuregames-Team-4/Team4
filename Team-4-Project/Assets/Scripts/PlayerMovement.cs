@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     {
         gridSystem = FindObjectOfType<GridSystem>();
         currentActionPoints = maxActionPoints;
-        GameStateManager.Instance.StartPlayerTurn(); // End the enemy's turn
     }
 
 
@@ -91,8 +90,6 @@ public class PlayerMovement : MonoBehaviour
         // Aggiorna lo stato della griglia
         Vector2Int previousPos = gridSystem.GetGridPosition(transform.position);
         Vector2Int newPos = gridSystem.GetGridPosition(targetPosition);
-
-        //Debug.Log(gridSystem.GetGridPosition(transform.position));
 
     }
 

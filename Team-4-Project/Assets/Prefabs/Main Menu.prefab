@@ -1084,6 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleScreen: {fileID: 2824287061957223092}
+  gameStateManager: {fileID: 6115450632804547490, guid: e51935f86583c4f86b8af42c7e604059, type: 3}
   creditsScreen: {fileID: 2209325627384840}
   controlsScreen: {fileID: 3067162885471044731}
 --- !u!1 &5286081154213220837

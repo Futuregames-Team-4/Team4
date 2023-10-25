@@ -34,9 +34,7 @@ public class NewEnemyPathfinding : MonoBehaviour
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
 
         this.playerPos = playerPos;
-        Debug.Log("Player Position" + playerPos);
         Vector2Int startPos = gridSystem.GetGridPosition(transform.position);
-        Debug.Log("Posizione di inzio:" + startPos);
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         Dictionary<Vector2Int, Vector2Int> cameFrom = new Dictionary<Vector2Int, Vector2Int>();
 

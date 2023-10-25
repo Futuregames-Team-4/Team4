@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using DebugTools;
+
 
 public class GameStateManager : MonoBehaviour
 {
@@ -17,24 +20,49 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private PlayerMovement player;
     [SerializeField] private NewEnemyPathfinding enemy;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Update references when a new scene is loaded
+        player = FindObjectOfType<PlayerMovement>();
+        enemy = FindObjectOfType<NewEnemyPathfinding>();
+    }
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);  // Keeps this object alive across scene changes
         }
         else if (Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject);            // Destroy any other instances that get created in new scenes
             return;
+        }
+
+        if (CurrentState != GameState.Start) // Assuming Start state corresponds to the menu
+        {
+            player = FindObjectOfType<PlayerMovement>();
+            enemy = FindObjectOfType<NewEnemyPathfinding>();
+            StartPlayerTurn(); //
         }
     }
 
     private void Start()
     {
+        CurrentState = GameState.Start;
         player = FindObjectOfType<PlayerMovement>();
         enemy = FindObjectOfType<NewEnemyPathfinding>();
-        StartPlayerTurn();
     }
 
     private void Update()
@@ -62,34 +90,50 @@ public class GameStateManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        CurrentState = GameState.PlayerTurn;
-        player.useActionPoints = true;  // Enable player input
-        PlayerMovement.currentActionPoints = player.maxActionPoints;
+        if (player && !player.enabled)
+        {
+            CurrentState = GameState.PlayerTurn;
+            player.enabled = true;
+            player.useActionPoints = true; // Enable player input
+            PlayerMovement.currentActionPoints = player.maxActionPoints;
+        }
+        
     }
 
     public void EndPlayerTurn()
     {
-        player.useActionPoints = false; // Disable player input
-        StartEnemyTurn();
+        if (player && player.enabled)
+        {
+            player.useActionPoints = false; // Disable player input
+            player.enabled = false;
+            StartEnemyTurn();
+        }
     }
 
     public void StartEnemyTurn()
     {
-        int playerCurrentActionPoints = PlayerMovement.currentActionPoints;
-        CurrentState = GameState.EnemyTurn;
-        if (!enemy.enabled)
+        if (enemy)
         {
-            EndEnemyTurn();
-            return;
-        } else
-        {
-            enemy.shouldFollowPlayer = true; // This will make the enemy calculate the path and start following the player
+            int playerCurrentActionPoints = PlayerMovement.currentActionPoints;
+            CurrentState = GameState.EnemyTurn;
+            if (!enemy.enabled)
+            {
+                EndEnemyTurn();
+                return;
+            }
+            else
+            {
+                enemy.shouldFollowPlayer = true; // This will make the enemy calculate the path and start following the player
+            }
         }
     }
 
     public void EndEnemyTurn()
     {
-        CurrentState = GameState.PlayerTurn;
-        StartPlayerTurn(); // Start the player's turn again
+        if (enemy)
+        {
+            CurrentState = GameState.PlayerTurn;
+            StartPlayerTurn(); // Start the player's turn again
+        }
     }
 }

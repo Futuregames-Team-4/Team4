@@ -8,6 +8,9 @@ public class MainMenuNavigation : MonoBehaviour
     [SerializeField]
     GameObject titleScreen;
 
+    [SerializeField]
+    GameStateManager gameStateManager;
+
     //[SerializeField]
     //GameObject optionsScreen;
 
@@ -26,6 +29,7 @@ public class MainMenuNavigation : MonoBehaviour
     {
         Debug.Log("Starting game");
         SceneManager.LoadScene("GeorgiScene");
+        gameStateManager.StartPlayerTurn();
     }
 
     public void MainMenuButton()
