@@ -6,10 +6,8 @@ public class PlayerMovement : MonoBehaviour
     public static int currentActionPoints;
     public bool mouseDebug = false;             // Show Raycast of the mouse
     public bool useActionPoints = true;         // Enable or disale ActionPoints
-    private GameStateManager gameStateManager;  // Game Manager
     private RaycastHit hitInfo;
     private GridSystem gridSystem;
-    private Vector2Int playerGridPosition;
 
     private void Start()
     {
@@ -64,19 +62,18 @@ public class PlayerMovement : MonoBehaviour
         if (!isAdjacentMove)
             return false;
 
-        // Verifica se la casella target è occupata
+        // Verify if the target tile isOccupied
         RaycastHit hit;
-        if (Physics.Raycast(targetPosition + Vector3.up * 5f, Vector3.down, out hit)) // Proietta un ray verso il basso dalla posizione target
+        if (Physics.Raycast(targetPosition + Vector3.up * 5f, Vector3.down, out hit)) // Raycast towards target tile
         {
             if (hit.collider.CompareTag("Square"))
             {
                 SquareStatus squareStatus = hit.collider.GetComponent<SquareStatus>();
                 if (squareStatus && squareStatus.isOccupied)
-                    return false; // Casella occupata
+                    return false; // isOccupied = true
             }
         }
-
-        return true; // Casella libera
+        return true; // isOccupied = false
     }
 
     private void MoveTo(Vector3 targetPosition)
@@ -86,14 +83,13 @@ public class PlayerMovement : MonoBehaviour
         {
             occupier.MoveToSquare(targetPosition);
         }
-
-        // Aggiorna lo stato della griglia
+        // Update GridStatus
         Vector2Int previousPos = gridSystem.GetGridPosition(transform.position);
         Vector2Int newPos = gridSystem.GetGridPosition(targetPosition);
 
     }
 
-    private void ConsumeActionPoint()   // Decrease action Points
+    private void ConsumeActionPoint()   // Decrease actionPoints
     {
         if (useActionPoints)
         {
