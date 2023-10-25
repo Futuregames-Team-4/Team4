@@ -10,7 +10,6 @@ public class LightRefill : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("PICK UP MF");
-            //collision.gameObject.GetComponent<FuelConsumption>().UseConsumable();
             
             fuel.UseConsumable();
         }
