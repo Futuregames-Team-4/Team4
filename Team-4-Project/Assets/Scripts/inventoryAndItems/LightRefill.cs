@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LightRefill : MonoBehaviour
 {
+
+    [SerializeField]
+    GameObject objectToInactivate;
+
     private void OnTriggerEnter(Collider other)
     {
         FuelConsumption fuel = other.transform.parent.GetComponent<FuelConsumption>();
@@ -13,6 +17,10 @@ public class LightRefill : MonoBehaviour
             //collision.gameObject.GetComponent<FuelConsumption>().UseConsumable();
             
             fuel.UseConsumable();
+
+                    objectToInactivate.SetActive(false);
+               
+            
         }
     }
 }
