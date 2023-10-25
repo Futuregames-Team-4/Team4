@@ -1788,6 +1788,14 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Bias
       value: 1.7
       objectReference: {fileID: 0}
+    - target: {fileID: 7162216933955889745, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7162216933955889745, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7608406274253330537, guid: 1f81dedd9d7d1e645a1857f9d340a572, type: 3}
       propertyPath: fuelLeft
       value: 
